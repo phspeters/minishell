@@ -6,13 +6,14 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 17:02:33 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/02/21 15:38:31 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/08/08 19:41:10 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include <fcntl.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
@@ -31,7 +32,11 @@ char	*ft_strtoupper(char *str);
 char	*ft_strtolower(char *str);
 void	*ft_free_str(char *str);
 int		ft_fprintf(const int fd, const char *str, ...);
-long	ft_atol(const char *nptr);
+int		ft_strcmp(const char *s1, const char *s2);
+long	ft_atol(char *str);
+char	*ft_strdup_calloc(const char *s);
+char	*ft_strndup(char *s, int n);
+char	*ft_strchr_quote_aware(const char *s, int c);
 
 //Mandatory part 1 functions
 int		ft_isalpha(int c);
@@ -90,10 +95,16 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 //get_next_line
 char	*ft_get_next_line(int fd);
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 80
+#  define BUFFER_SIZE 42
 # endif
 
 //ft_printf
 int		ft_printf(const char *str, ...);
+
+//ft_collect_mem
+t_list	**ft_get_memory_lst(void);
+void	ft_collect_mem(void *content);
+void	ft_free_memory(void);
+void	*ft_dalloc(size_t nmemb, size_t size);
 
 #endif

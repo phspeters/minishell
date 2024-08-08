@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/18 20:34:09 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/08/08 19:42:15 by pehenri2         ###   ########.fr       */
+/*   Created: 2024/03/28 15:52:37 by pehenri2          #+#    #+#             */
+/*   Updated: 2024/03/28 15:58:29 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	char	*dup;
-	int		s_size;
+	int	i;
 
-	s_size = ft_strlen((char *)s) + 1;
-	dup = ft_dalloc(sizeof(char), s_size);
-	if (dup == NULL)
-		return (NULL);
-	dup = ft_memcpy(dup, s, s_size);
-	return (dup);
+	i = 0;
+	while ((s1[i] || s2[i]))
+	{
+		if (s1[i] != s2[i])
+			break ;
+		i++;
+	}
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

@@ -1,26 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strchr_quote_aware.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/18 20:34:09 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/08/08 19:42:15 by pehenri2         ###   ########.fr       */
+/*   Created: 2024/05/16 15:25:35 by pehenri2          #+#    #+#             */
+/*   Updated: 2024/05/16 15:25:41 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s)
+char	*ft_strchr_quote_aware(const char *s, int c)
 {
-	char	*dup;
-	int		s_size;
+	size_t	len;
+	size_t	i;
 
-	s_size = ft_strlen((char *)s) + 1;
-	dup = ft_dalloc(sizeof(char), s_size);
-	if (dup == NULL)
-		return (NULL);
-	dup = ft_memcpy(dup, s, s_size);
-	return (dup);
+	len = ft_strlen(s);
+	i = 0;
+	while (i <= len)
+	{
+		if (s[i] == '\'')
+		{
+			i++;
+			while (s[i] && s[i] != '\'')
+				i++;
+		}
+		if (s[i] == '\"')
+		{
+			i++;
+			while (s[i] && s[i] != '\"')
+				i++;
+		}
+		if (s[i] == (unsigned char)c)
+			return ((char *)s + i);
+		i++;
+	}
+	return (NULL);
 }

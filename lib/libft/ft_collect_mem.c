@@ -1,26 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_collect_mem.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/18 20:34:09 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/08/08 19:42:15 by pehenri2         ###   ########.fr       */
+/*   Created: 2024/02/16 16:56:31 by leduard2          #+#    #+#             */
+/*   Updated: 2024/08/08 19:46:01 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s)
+t_list	**ft_get_memory_lst(void)
 {
-	char	*dup;
-	int		s_size;
+	static t_list	*lst;
 
-	s_size = ft_strlen((char *)s) + 1;
-	dup = ft_dalloc(sizeof(char), s_size);
-	if (dup == NULL)
-		return (NULL);
-	dup = ft_memcpy(dup, s, s_size);
-	return (dup);
+	return (&lst);
+}
+
+void	ft_collect_mem(void *content)
+{
+	ft_lstadd_back(ft_get_memory_lst(), ft_lstnew(content));
+}
+
+void	ft_free_memory(void)
+{
+	ft_get_next_line(-1);
+	ft_lstclear(ft_get_memory_lst(), &free);
+}
+
+void	*ft_dalloc(size_t nmemb, size_t size)
+{
+	void	*p;
+
+	p = ft_calloc(nmemb, size);
+	ft_collect_mem(p);
+	return (p);
 }

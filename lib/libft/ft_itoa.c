@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pehenri2 <pehenri2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 09:56:32 by pehenri2          #+#    #+#             */
-/*   Updated: 2023/10/12 12:51:38 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/08/08 19:43:03 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_itoa(int n)
 		nbr = -nbr;
 		len++;
 	}
-	ascii = malloc(sizeof(char) * (len + 1));
+	ascii = ft_dalloc(sizeof(char), (len + 1));
 	if (ascii == NULL)
 		return (NULL);
 	ascii[len] = '\0';

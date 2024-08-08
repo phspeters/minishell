@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pehenri2 <pehenri2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 17:32:34 by pehenri2          #+#    #+#             */
-/*   Updated: 2023/08/02 17:47:39 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/08/08 19:43:10 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	char	*str;
 	int		i;
 
-	str = malloc(sizeof(char) * (ft_strlen((char *)s) + 1));
+	str = ft_dalloc(sizeof(char), (ft_strlen((char *)s) + 1));
 	i = 0;
 	if (str != NULL)
 	{

@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/18 20:34:09 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/08/08 19:42:15 by pehenri2         ###   ########.fr       */
+/*   Created: 2024/05/22 18:28:39 by pehenri2          #+#    #+#             */
+/*   Updated: 2024/05/22 18:28:49 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s)
+char	*ft_strndup(char *s, int n)
 {
-	char	*dup;
-	int		s_size;
+	char	*ptr;
+	int		i;
 
-	s_size = ft_strlen((char *)s) + 1;
-	dup = ft_dalloc(sizeof(char), s_size);
-	if (dup == NULL)
+	i = 0;
+	while (s[i])
+		i++;
+	if (n < i)
+		i = n;
+	ptr = ft_dalloc(i + 1, sizeof(ptr));
+	if (!ptr)
 		return (NULL);
-	dup = ft_memcpy(dup, s, s_size);
-	return (dup);
+	i = 0;
+	while (s && *s && i < n)
+		ptr[i++] = *s++;
+	ptr[i] = '\0';
+	return (ptr);
 }

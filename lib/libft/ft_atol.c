@@ -3,37 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/02 19:28:44 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/02/02 19:28:59 by pehenri2         ###   ########.fr       */
+/*   Created: 2024/01/29 14:13:59 by leduard2          #+#    #+#             */
+/*   Updated: 2024/01/29 14:18:58 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-long	ft_atol(const char *nptr)
+long	ft_atol(char *str)
 {
+	char	*c;
 	int		i;
-	int		s;
-	long	result;
+	int		sign;
+	long	sum;
 
-	s = 1;
 	i = 0;
-	result = 0;
-	while (ft_isspace(nptr[i]))
+	sign = 1;
+	c = str;
+	sum = 0;
+	while ((c[i] >= '\t' && c[i] <= '\r') || c[i] == ' ')
 		i++;
-	if (nptr[i] == '-')
+	if (c[i] == '-')
 	{
-		s = -1;
+		sign *= -1;
 		i++;
 	}
-	else if (nptr[i] == '+')
+	else if (c[i] == '+')
 		i++;
-	while (ft_isdigit(nptr[i]))
+	while (ft_isdigit(c[i]))
 	{
-		result = (nptr[i] - '0') + (result * 10);
+		sum = (sum * 10) + (c[i] - '0');
 		i++;
 	}
-	return (result * s);
+	return (sum * sign);
 }

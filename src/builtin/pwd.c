@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/18 20:34:09 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/08/08 19:42:15 by pehenri2         ###   ########.fr       */
+/*   Created: 2024/04/12 11:16:36 by leduard2          #+#    #+#             */
+/*   Updated: 2024/04/30 15:59:40 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strdup(const char *s)
+int	execute_pwd(void)
 {
-	char	*dup;
-	int		s_size;
+	char	*path;
 
-	s_size = ft_strlen((char *)s) + 1;
-	dup = ft_dalloc(sizeof(char), s_size);
-	if (dup == NULL)
-		return (NULL);
-	dup = ft_memcpy(dup, s, s_size);
-	return (dup);
+	path = getcwd(NULL, 0);
+	if (path)
+	{
+		ft_collect_mem(path);
+		printf("%s\n", path);
+		return (SUCCESS);
+	}
+	else
+		return (handle_error("pwd"));
 }
