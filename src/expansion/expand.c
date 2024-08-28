@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:25:53 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/24 19:54:34 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/08/28 17:02:34 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	expand_tokens(t_tree_node *cmd_node)
 {
 	t_token	*current;
 
-	current = cmd_node->cmd;
+	current = cmd_node->tokens;
 	while (current)
 	{
 		current->value = expand_vars(current->value);

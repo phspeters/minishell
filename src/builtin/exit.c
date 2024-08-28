@@ -6,29 +6,30 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 15:03:10 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/25 13:26:11 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/08/28 17:08:02 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	execute_exit(t_token *cmd)
+int	execute_exit(t_token *tokens)
 {
 	long	status;
 
 	status = 0;
 	if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
 		ft_fprintf(STDOUT_FILENO, "exit\n");
-	if (cmd->next)
+	if (tokens->next)
 	{
-		status = ft_atol(cmd->next->value);
-		if (validate_argument(cmd->next->value) || *(cmd->next->value) == '\0')
+		status = ft_atol(tokens->next->value);
+		if (validate_argument(tokens->next->value)
+			|| *(tokens->next->value) == '\0')
 		{
-			ft_fprintf(STDERR_FILENO, "exit: %s: numeric argument required\n", \
-cmd->next->value);
+			ft_fprintf(STDERR_FILENO, "exit: %s: numeric argument required\n",
+				tokens->next->value);
 			exit(SYNTAX_ERROR);
 		}
-		if (cmd->next->next)
+		if (tokens->next->next)
 			return (!!write(STDERR_FILENO, "exit: too many arguments\n", 25));
 	}
 	delete_heredoc_files();

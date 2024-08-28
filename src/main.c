@@ -6,16 +6,11 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/25 14:24:15 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/08/28 17:05:19 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	term_properties(void);
-char	*init_and_wait_input(t_token **list);
-void	reset_for_next_iteration(char *line);
-int		leave_program(int status);
 
 int	main(void)
 {
@@ -23,8 +18,8 @@ int	main(void)
 	t_token					*list;
 	t_tree_node				*root;
 
-	init_environ();
-	term_properties();
+	init_environment_variables();
+	setup_terminal_properties();
 	while (42)
 	{
 		line = init_and_wait_input(&list);
@@ -44,7 +39,7 @@ int	main(void)
 	return (leave_program(SUCCESS));
 }
 
-void	term_properties(void)
+void	setup_terminal_properties(void)
 {
 	static struct termios	term;
 	static int				term_saved = 0;
@@ -75,7 +70,7 @@ char	*init_and_wait_input(t_token **list)
 
 void	reset_for_next_iteration(char *line)
 {
-	term_properties();
+	setup_terminal_properties();
 	free(line);
 	(void)line;
 	delete_heredoc_files();

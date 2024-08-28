@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bin_tree.c                                         :+:      :+:    :+:   */
+/*   syntax_tree.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:38:36 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/02 16:37:45 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/08/28 17:02:46 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 t_tree_node	*build_execution_tree(t_token *token_list)
 {
-	t_tree_node	*root;
+	t_tree_node	*node;
 
-	root = ft_dalloc(1, sizeof(t_tree_node));
-	if (!root)
+	node = ft_dalloc(1, sizeof(t_tree_node));
+	if (!node)
 	{
 		perror("failed to build execution tree");
 		return (NULL);
 	}
-	split_tokens_into_tree(root, token_list);
-	return (root);
+	split_tokens_into_tree(node, token_list);
+	return (node);
 }
 
 void	split_tokens_into_tree(t_tree_node *tree_node, t_token *token_list)
@@ -42,7 +42,7 @@ void	split_tokens_into_tree(t_tree_node *tree_node, t_token *token_list)
 	if (is_redirect)
 		return (split_redirect(tree_node, token_list, is_redirect));
 	else
-		tree_node->cmd = token_list;
+		tree_node->tokens = token_list;
 }
 
 void	split_list(t_tree_node *tree_node, t_token *token_list,
@@ -52,7 +52,7 @@ void	split_list(t_tree_node *tree_node, t_token *token_list,
 
 	if (!tree_node || !token_list || !token_to_cut)
 		return ;
-	tree_node->cmd = token_to_cut;
+	tree_node->tokens = token_to_cut;
 	right = cut_token_list(token_list, token_to_cut);
 	if (!right)
 	{
@@ -98,7 +98,7 @@ void	split_redirect(t_tree_node *tree_node, t_token *token_list,
 {
 	if (!tree_node || !token_list || !token_to_cut)
 		return ;
-	tree_node->cmd = token_to_cut;
+	tree_node->tokens = token_to_cut;
 	tree_node->right = get_redir_filename(token_to_cut->next);
 	if (token_list == token_to_cut)
 	{

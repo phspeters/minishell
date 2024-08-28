@@ -6,13 +6,13 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:16:10 by leduard2          #+#    #+#             */
-/*   Updated: 2024/05/22 17:46:08 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:59:51 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	execute_unset(t_token *cmd)
+int	execute_unset(t_token *tokens)
 {
 	int		i;
 	char	**args;
@@ -20,7 +20,7 @@ int	execute_unset(t_token *cmd)
 
 	i = 0;
 	status = 0;
-	args = get_cmd_and_args(cmd);
+	args = get_cmd_and_args(tokens);
 	if (!args[1])
 		return (set_exit_status(status));
 	while (args[++i])

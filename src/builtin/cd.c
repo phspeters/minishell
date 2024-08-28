@@ -6,19 +6,19 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:57:59 by leduard2          #+#    #+#             */
-/*   Updated: 2024/05/22 15:21:32 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/08/28 17:06:06 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	execute_cd(t_token *cmd)
+int	execute_cd(t_token *tokens)
 {
 	char	**args;
 
-	if (token_lst_get_size(cmd) > 2)
+	if (token_lst_get_size(tokens) > 2)
 		return (!!write(STDERR_FILENO, "cd: too many arguments\n", 23));
-	args = get_cmd_and_args(cmd);
+	args = get_cmd_and_args(tokens);
 	if (!args[1] || !ft_strcmp(args[1], "~"))
 		return (change_to_home());
 	return (change_dir(args[1]));

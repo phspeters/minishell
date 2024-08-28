@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_utils.c                                     :+:      :+:    :+:   */
+/*   expand_helpers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:25:05 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/23 19:37:34 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/08/28 17:14:14 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ void	handle_empty_value(t_token **current, t_tree_node **cmd_node)
 		(*current)->prev->next = (*current)->next;
 	if ((*current)->next)
 		(*current)->next->prev = (*current)->prev;
-	if (*((*cmd_node)->cmd->value) == '\0')
+	if (*((*cmd_node)->tokens->value) == '\0')
 	{
-		(*cmd_node)->cmd = (*cmd_node)->cmd->next;
-		if ((*cmd_node)->cmd)
-			(*cmd_node)->cmd->prev = NULL;
+		(*cmd_node)->tokens = (*cmd_node)->tokens->next;
+		if ((*cmd_node)->tokens)
+			(*cmd_node)->tokens->prev = NULL;
 	}
 }

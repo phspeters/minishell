@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 12:13:03 by pehenri2          #+#    #+#              #
-#    Updated: 2024/08/08 20:07:41 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/08/28 17:14:35 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,19 +32,19 @@ FILES				= 	main.c \
 						execute_pipe.c \
 						execute_redirect.c \
 						executor.c \
-						expand_utils.c \
+						expand_helpers.c \
 						expand.c \
 						wildcard.c \
 						lexer.c \
 						open_syntax.c \
-						bin_tree_helper.c \
-						bin_tree.c \
 						parser.c \
+						syntax_tree_helpers.c \
+						syntax_tree.c \
 						heredoc.c \
 						signals.c \
 						environ.c \
 						error.c \
-						helper.c \
+						helpers.c \
 						token_list.c
 
 OBJS				= 	$(FILES:%.c=$(OBJ_DIR)/%.o)

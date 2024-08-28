@@ -6,13 +6,13 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:16:29 by leduard2          #+#    #+#             */
-/*   Updated: 2024/05/22 17:50:05 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:59:43 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	execute_export(t_token *cmd)
+int	execute_export(t_token *tokens)
 {
 	int		i;
 	char	**args;
@@ -22,7 +22,7 @@ int	execute_export(t_token *cmd)
 
 	i = 0;
 	status = 0;
-	args = get_cmd_and_args(cmd);
+	args = get_cmd_and_args(tokens);
 	if (!args[1])
 		print_environ_sorted();
 	while (args[++i])

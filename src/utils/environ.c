@@ -6,13 +6,13 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:18:32 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/20 14:46:56 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:46:53 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init_environ(void)
+void	init_environment_variables(void)
 {
 	char	**env_copy;
 	int		i;

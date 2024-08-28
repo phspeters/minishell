@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/08/08 19:15:10 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/08/28 17:07:03 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_token
 
 typedef struct s_tree_node
 {
-	t_token				*cmd;
+	t_token				*tokens;
 	struct s_tree_node	*left;
 	struct s_tree_node	*right;
 }						t_tree_node;
@@ -64,41 +64,48 @@ enum					e_token_type
 	WORD,
 };
 
+/***************** main.c *****************/
+
+void		setup_terminal_properties(void);
+char		*init_and_wait_input(t_token **list);
+void		reset_for_next_iteration(char *line);
+int			leave_program(int status);
+
 /*******************************************
 ############## BUILTIN FOLDER ##############
 *******************************************/
 
 /*************** builtins.c ***************/
 
-bool		is_builtin(t_token *cmd);
-int			execute_builtin(t_token *cmd);
+bool		is_builtin(t_token *tokens);
+int			execute_builtin(t_token *tokens);
 
 /****************** cd.c ******************/
 
-int			execute_cd(t_token *cmd);
+int			execute_cd(t_token *tokens);
 int			change_to_home(void);
 int			change_dir(char *path);
 int			check_access(char *path);
 
 /***************** echo.c *****************/
 
-int			execute_echo(t_token *cmd);
+int			execute_echo(t_token *tokens);
 int			check_n_flag(char *str);
 void		print_args(char **args, int has_n_flag);
 
 /***************** env.c ******************/
 
-int			execute_env(t_token *cmd);
+int			execute_env(t_token *tokens);
 
 /***************** exit.c *****************/
 
-int			execute_exit(t_token *cmd);
+int			execute_exit(t_token *tokens);
 int			validate_argument(char *arg);
 int			check_limits(char *arg, char sign);
 
 /***************** export.c ******************/
 
-int			execute_export(t_token *cmd);
+int			execute_export(t_token *tokens);
 char		*get_key(char *arg);
 int			is_valid_identifier(char *str, char *cmd_name);
 int			is_env_key_present(char *key);
@@ -117,7 +124,7 @@ int			execute_pwd(void);
 
 /***************** unset.c ******************/
 
-int			execute_unset(t_token *cmd);
+int			execute_unset(t_token *tokens);
 void		delete_env_key(char *key_to_delete);
 
 /*******************************************
@@ -127,10 +134,10 @@ void		delete_env_key(char *key_to_delete);
 /************ execute_command.c ***********/
 
 int			execute_command(t_tree_node *cmd_node);
-void		run_command_in_child_process(t_token *cmd);
-char		*get_cmd_path(t_token *cmd);
-char		*search_in_path(t_token *cmd);
-char		**get_cmd_and_args(t_token *cmd);
+void		run_command_in_child_process(t_token *tokens);
+char		*get_cmd_path(t_token *tokens);
+char		*search_in_path(t_token *tokens);
+char		**get_cmd_and_args(t_token *tokens);
 
 /************* execute_pipe.c *************/
 
@@ -201,7 +208,15 @@ void		move_to_next_quote(char *str, int *index,
 ############## PARSER FOLDER ###############
 *******************************************/
 
-/*************** bin_tree.c ***************/
+/**************** parser.c ****************/
+
+int			parser(t_token *list, t_tree_node **root);
+int			check_syntax(t_token *current);
+int			check_control_operator_rule(t_token *token);
+int			check_redirect_rule(t_token *token);
+int			check_parenthesis_rule(t_token *token);
+
+/************* syntax_tree.c **************/
 
 t_tree_node	*build_execution_tree(t_token *token_list);
 void		split_tokens_into_tree(t_tree_node *tree_node,
@@ -213,20 +228,12 @@ t_token		*cut_token_list(t_token *token_list,
 void		split_redirect(t_tree_node *tree_node,
 				t_token *token_list, t_token *token_to_cut);
 
-/*********** bin_tree_helper.c ************/
+/********** syntax_tree_helper.c **********/
 
 t_token		*search_and_or(t_token *token_list);
 t_token		*search_pipe(t_token *token_list);
 t_token		*search_redirect(t_token *token_list);
 t_tree_node	*get_redir_filename(t_token *redir);
-
-/**************** parser.c ****************/
-
-int			parser(t_token *list, t_tree_node **root);
-int			check_syntax(t_token *current);
-int			check_control_operator_rule(t_token *token);
-int			check_redirect_rule(t_token *token);
-int			check_parenthesis_rule(t_token *token);
 
 /*******************************************
 ############# REDIRECT FOLDER ##############
@@ -256,6 +263,14 @@ void		heredoc_signal_handler(int signum);
 ############### UTILS FOLDER ###############
 *******************************************/
 
+/**************** environ.c ****************/
+
+void		init_environment_variables(void);
+void		free_env(void);
+void		set_env(char *new_str, char *key, char *content);
+void		add_to_env(char *str);
+void		update_env(char *new_str, char *key);
+
 /**************** error.c *****************/
 
 int			syntax_error(char *token);
@@ -263,7 +278,7 @@ int			throw_error(char *cmd_path);
 int			handle_error(char *message);
 int			signal_error(void);
 
-/**************** helper.c ****************/
+/*************** helpers.c ****************/
 
 char		***get_my_env(void);
 int			*get_exit_status(void);
@@ -277,13 +292,5 @@ void		token_lst_add_back(t_token **token_list, t_token *new);
 int			token_lst_get_size(t_token *token_list);
 t_token		*token_lst_get_last(t_token *token_list);
 void		sort_token_lst(t_token **matched);
-
-/**************** environ.c ****************/
-
-void		init_environ(void);
-void		free_env(void);
-void		set_env(char *new_str, char *key, char *content);
-void		add_to_env(char *str);
-void		update_env(char *new_str, char *key);
 
 #endif

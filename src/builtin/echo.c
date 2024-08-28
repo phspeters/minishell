@@ -6,19 +6,19 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:36:14 by leduard2          #+#    #+#             */
-/*   Updated: 2024/04/16 16:24:56 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:59:29 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	execute_echo(t_token *cmd)
+int	execute_echo(t_token *tokens)
 {
 	char	**args;
 	int		has_n_flag;
 
 	has_n_flag = 0;
-	args = get_cmd_and_args(cmd);
+	args = get_cmd_and_args(tokens);
 	args++;
 	while (*args && check_n_flag(*args))
 	{
