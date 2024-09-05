@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:57:59 by leduard2          #+#    #+#             */
-/*   Updated: 2024/08/28 17:06:06 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/09/04 21:36:08 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,18 @@ int	execute_cd(t_token *tokens)
 int	change_to_home(void)
 {
 	char	*home;
-	char	*cur_dir;
+	char	*old_dir;
+	char	*new_dir;
 
-	cur_dir = getcwd(NULL, 0);
-	ft_collect_mem(cur_dir);
+	old_dir = get_cwd();
 	home = getenv("HOME");
 	if (home)
 	{
 		if (chdir(home) == -1)
 			return (handle_error(home));
-		set_env(ft_strjoin("OLDPWD=", cur_dir), "OLDPWD", cur_dir);
-		set_env(ft_strjoin("PWD=", getcwd(NULL, 0)), "PWD", getcwd(NULL, 0));
+		set_env(ft_strjoin("OLDPWD=", old_dir), "OLDPWD", old_dir);
+		new_dir = get_cwd();
+		set_env(ft_strjoin("PWD=", new_dir), "PWD", new_dir);
 		return (SUCCESS);
 	}
 	else
@@ -46,18 +47,17 @@ int	change_to_home(void)
 
 int	change_dir(char *path)
 {
-	char	*cur_dir;
+	char	*old_dir;
+	char	*new_dir;
 
-	cur_dir = getcwd(NULL, 4096);
-	if (!cur_dir)
-		return (handle_error("cd"));
-	ft_collect_mem(cur_dir);
+	old_dir = get_cwd();
 	if (check_access(path) == FAILURE)
 		return (FAILURE);
 	if (chdir(path) == -1)
 		return (handle_error(path));
-	set_env(ft_strjoin("OLDPWD=", cur_dir), "OLDPWD", cur_dir);
-	set_env(ft_strjoin("PWD=", getcwd(NULL, 0)), "PWD", getcwd(NULL, 0));
+	set_env(ft_strjoin("OLDPWD=", old_dir), "OLDPWD", old_dir);
+	new_dir = get_cwd();
+	set_env(ft_strjoin("PWD=", new_dir), "PWD", new_dir);
 	return (SUCCESS);
 }
 
@@ -70,4 +70,15 @@ int	check_access(char *path)
 		return (!!ft_fprintf(STDERR_FILENO, "cd: %s: permission denied\n",
 				path));
 	return (SUCCESS);
+}
+
+char	*get_cwd(void)
+{
+	char	*cwd;
+
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+		handle_error("cd");
+	ft_collect_mem(cwd);
+	return (cwd);
 }

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:47:59 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/08/28 17:14:22 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/09/04 21:37:10 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ t_tree_node	*get_redir_filename(t_token *redir)
 	filename = ft_dalloc(1, sizeof(t_tree_node));
 	if (!filename)
 	{
-		perror("failed to build execution tree");
+		perror("failed to build syntax tree");
 		return (NULL);
 	}
 	else

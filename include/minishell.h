@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/08/28 17:07:03 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/09/04 21:38:31 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int			execute_cd(t_token *tokens);
 int			change_to_home(void);
 int			change_dir(char *path);
 int			check_access(char *path);
+char		*get_cwd(void);
 
 /***************** echo.c *****************/
 
@@ -218,7 +219,7 @@ int			check_parenthesis_rule(t_token *token);
 
 /************* syntax_tree.c **************/
 
-t_tree_node	*build_execution_tree(t_token *token_list);
+t_tree_node	*build_syntax_tree(t_token *token_list);
 void		split_tokens_into_tree(t_tree_node *tree_node,
 				t_token *token_list);
 void		split_list(t_tree_node *tree_node, t_token *token_list,
