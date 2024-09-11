@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/08/28 17:05:19 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/09/11 20:27:45 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(void)
 		}
 		reset_for_next_iteration(line);
 	}
-	return (leave_program(SUCCESS));
+	return (cleanup_and_exit(SUCCESS));
 }
 
 void	setup_terminal_properties(void)
@@ -77,12 +77,13 @@ void	reset_for_next_iteration(char *line)
 	ft_free_memory();
 }
 
-int	leave_program(int status)
+int	cleanup_and_exit(int status)
 {
 	free_env();
+	delete_heredoc_files();
 	ft_free_memory();
 	if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
 		write(STDOUT_FILENO, "exit\n", 5);
 	rl_clear_history();
-	return (status);
+	exit(status);
 }

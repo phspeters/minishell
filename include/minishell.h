@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/09/04 21:38:31 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/09/11 20:29:27 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ enum					e_token_type
 void		setup_terminal_properties(void);
 char		*init_and_wait_input(t_token **list);
 void		reset_for_next_iteration(char *line);
-int			leave_program(int status);
+int			cleanup_and_exit(int status);
 
 /*******************************************
 ############## BUILTIN FOLDER ##############
