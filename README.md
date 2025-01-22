@@ -38,7 +38,7 @@ This project is about creating a simple shell. Yes, your own little bash. You wi
 
 ## 📋 Testing
 
-To compile, go to the project path and run:
+To compile, navigate to the project directory and run:
 
 ```shell
 $ make 
